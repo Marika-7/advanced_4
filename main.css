@@ -1,0 +1,169 @@
+:root {
+	--background: honeydew;
+	--border: gray;
+	--focus: rgb(142, 187, 142);
+	--popup: rgb(196, 214, 196);
+	--close: rgb(182, 2, 2);
+	--block-width: 300px;
+	--item-height: 18px;
+}
+*, 
+*::before, 
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--background);
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+/* блок з деревом каталогів */
+.navigation {
+	width: var(--block-width);
+	height: calc(100vh - 20px);
+	padding: 5px;
+	border: 1px solid var(--border);
+	overflow: auto;
+}
+/* <ul> */
+.list {
+	list-style: none;
+	position: relative;
+}
+/* вкладений <ul>  */
+.submenu > .list {
+	padding-left: 20px;
+	grid-column: 1 / 4;
+}
+/* <li> */
+.list__item {
+	display: grid;
+	grid-template-columns: 11px var(--item-height) max-content;
+	grid-template-rows: min-content auto;
+	column-gap: 5px;
+	align-items: center;
+	position: relative;
+}
+/* вертикальна лінія */
+.list__item::before {
+	content: '';
+	display: inline-block;
+	width: 1px;
+	height: calc(100% + 18px);
+	border-left: 1px dotted #000;
+	position: absolute;
+	top: -9px;
+	left: 5px;
+	z-index: -1;
+}
+.navigation > .list > .list__item:first-child::before {
+	height: calc(100% - 19px);
+	top: 9px;
+}
+.list__item:last-of-type::before {
+	display: none;
+}
+/* кнока відкрити/закрити вкладений список */
+.list__status {
+	width: 11px;
+	height: 11px;
+	border-radius: 2px;
+	position: relative;
+}
+.submenu > .list__status {
+	background-color: var(--background);
+	border: 1px solid var(--border);
+}
+.submenu > .list__status::before {
+	content: '+';
+	position: absolute;
+	top: -2px;
+	left: 1px;
+}
+.open > .list__status::before {
+	content: '-';
+	position: absolute;
+	top: -6px;
+	left: 2px;
+	font-size: 15px;
+}
+/* горизонтальна лінія */
+.list__status::after {
+	content: '';
+	display: inline-block;
+	width: 11px;
+	height: 1px;
+	border-top: 1px dotted #000;
+	position: absolute;
+	top: 4px;
+	left: 7px;
+	z-index: -1;
+}
+/* іконка */
+.list__icon {
+	width: var(--item-height);
+	height: var(--item-height);
+	background-image: url('./images/file.svg');
+}
+.submenu > .list__icon {
+	background-image: url('./images/folder.svg');
+}
+/* назва елемента */
+.list__name {
+	height: var(--item-height);
+	text-transform: capitalize;
+	line-height: var(--item-height);
+	padding: 0 2px;
+	border-radius: 5px;
+}
+
+/* спливаюче вікно */
+.popup {
+	width: 170px;
+	height: 80px;
+	background-color: var(--popup);
+	border: 1px solid var(--border);
+	padding: 10px;
+	border-radius: 10px;
+	position: absolute;
+	top: 20px;
+	left: 330px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+.popup__name {
+	font-weight: normal;
+}
+.popup__link {
+	font-size: 14px;
+	padding: 0 2px 2px;
+	border-radius: 5px;
+}
+.popup__close {
+	width: 19px;
+	height: 19px;
+	border: 1px solid var(--border);
+	border-radius: 20%;
+	color: var(--close);
+	position: absolute;
+	top: -1px;
+	right: -1px;
+	line-height: 18px;
+}
+
+/* фокус */
+:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px var(--focus);
+}
+
+/* приховані блоки */
+.hide {
+	display: none;
+}
